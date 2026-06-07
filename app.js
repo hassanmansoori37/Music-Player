@@ -126,3 +126,38 @@ prevBtn.addEventListener("click", () => {
 
 });
 
+// Volume Control
+
+
+volume.addEventListener("input", () => {
+
+    audio.volume = volume.value;
+
+});
+
+// Playlist
+
+songs.forEach((song, index) => {
+
+    const li = document.createElement("li");
+
+    li.textContent = song.title;
+
+    li.addEventListener("click", () => {
+
+        currentSong = index;
+
+        loadSong(currentSong);
+
+        audio.play();
+
+        isPlaying = true;
+
+        playBtn.innerHTML =
+        '<i class="fa-solid fa-pause"></i>';
+
+    });
+
+    playlist.appendChild(li);
+
+});
