@@ -84,3 +84,45 @@ playBtn.addEventListener("click", () => {
 
 });
 
+// Next Song
+
+nextBtn.addEventListener("click", () => {
+
+    currentSong++;
+
+    if(currentSong >= songs.length){
+        currentSong = 0;
+    }
+
+    loadSong(currentSong);
+
+    audio.play();
+
+    isPlaying = true;
+
+    playBtn.innerHTML =
+    '<i class="fa-solid fa-pause"></i>';
+
+});
+
+// Previous Song
+
+prevBtn.addEventListener("click", () => {
+
+    currentSong--;
+
+    if(currentSong < 0){
+        currentSong = songs.length - 1;
+    }
+
+    loadSong(currentSong);
+
+    audio.play();
+
+    isPlaying = true;
+
+    playBtn.innerHTML =
+    '<i class="fa-solid fa-pause"></i>';
+
+});
+
