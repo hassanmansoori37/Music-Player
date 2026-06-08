@@ -41,6 +41,8 @@ const prevBtn = document.getElementById("prevBtn");
 const songTitle = document.getElementById("songTitle");
 const playlist = document.getElementById("playlist");
 const volume = document.getElementById("volume");
+const searchInput = document.getElementById("searchInput");
+const categoryBtns = document.querySelectorAll(".category-btn");
 
 let currentSong = 0;
 let isPlaying = false;
@@ -135,29 +137,81 @@ volume.addEventListener("input", () => {
 
 });
 
-// Playlist
+// Render Playlist
 
-songs.forEach((song, index) => {
+function renderPlaylist(filteredSongs){
 
-    const li = document.createElement("li");
+    playlist.innerHTML = "";
 
-    li.textContent = song.title;
+    filteredSongs.forEach((song) => {
 
-    li.addEventListener("click", () => {
+        const li = document.createElement("li");
 
-        currentSong = index;
+        li.textContent = song.title;
 
-        loadSong(currentSong);
+        li.addEventListener("click", () => {
 
-        audio.play();
+            currentSong = songs.indexOf(song);
 
-        isPlaying = true;
+            loadSong(currentSong);
 
-        playBtn.innerHTML =
-        '<i class="fa-solid fa-pause"></i>';
+            audio.play();
+
+            isPlaying = true;
+
+            playBtn.innerHTML =
+            '<i class="fa-solid fa-pause"></i>';
+
+        });
+
+        playlist.appendChild(li);
 
     });
 
-    playlist.appendChild(li);
+}
+
+renderPlaylist(songs);
+
+// Search Songs
+
+searchInput.addEventListener("input", () => {
+
+    const searchValue =
+    searchInput.value.toLowerCase();
+
+    const filteredSongs = songs.filter(song =>
+        song.title.toLowerCase().includes(searchValue)
+    );
+
+    renderPlaylist(filteredSongs);
+
+});
+
+// Category Filter
+
+categoryBtns.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+        const category =
+        button.textContent;
+
+        if(category === "All"){
+
+            renderPlaylist(songs);
+
+        }
+
+        else{
+
+            const filteredSongs =
+            songs.filter(song =>
+            song.category === category);
+
+            renderPlaylist(filteredSongs);
+
+        }
+
+    });
 
 });
